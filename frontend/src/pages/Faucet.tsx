@@ -51,7 +51,7 @@ const Faucet = () => {
       setReceiverAddress("Done!");
     } catch (err: any) {
       console.error("Error claiming tokens:", err);
-      setError(err.message || "Failed to claim tokens");
+      setError("Failed to claim tokens");
     } finally {
       setIsLoading(false);
     }
