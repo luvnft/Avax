@@ -31,7 +31,6 @@ const Navbar = () => {
             >
               Launch
             </Link>
-
             <Link
               to="/rankings"
               className="text-gray-300 hover:text-purple-400 transition"
@@ -49,6 +48,24 @@ const Navbar = () => {
               className="text-gray-300 hover:text-purple-400 transition"
             >
               Docs
+            </Link>
+            <Link
+              to="/balance-app"
+              className="text-gray-300 hover:text-purple-400 transition"
+            >
+              Balance
+            </Link>
+            <Link
+              to="/basic-wallet"
+              className="text-gray-300 hover:text-purple-400 transition"
+            >
+              Portfolio
+            </Link>
+            <Link
+              to="/basic-explorer"
+              className="text-gray-300 hover:text-purple-400 transition"
+            >
+              Explorer
             </Link>
             <Link
               to="/faucet"
@@ -82,7 +99,6 @@ const Navbar = () => {
               >
                 Launch
               </Link>
-
               <Link
                 to="/rankings"
                 className="text-gray-300 hover:text-purple-400 transition"
@@ -100,6 +116,31 @@ const Navbar = () => {
                 className="text-gray-300 hover:text-purple-400 transition"
               >
                 Docs
+              </Link>
+              <Link
+                to="/balance-app"
+                className="text-gray-300 hover:text-purple-400 transition"
+              >
+                Balance
+              </Link>
+              <Link
+                to="/basic-wallet"
+                className="text-gray-300 hover:text-purple-400 transition"
+              >
+                Portfolio
+              </Link>
+              <Link
+                to="/basic-explorer"
+                className="text-gray-300 hover:text-purple-400 transition"
+              >
+                Explorer
+              </Link>
+              <Link
+                to="/faucet"
+                className="flex items-center space-x-1 text-gray-300 hover:text-purple-400 transition"
+              >
+                <Droplets className="h-4 w-4" />
+                <span>Faucet</span>
               </Link>
               <WalletButton />
             </div>
