@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Rocket, Store } from "lucide-react";
+import { Menu, X, Rocket, Store, Droplets } from "lucide-react";
 import WalletButton from "./WalletButton";
 
 const Navbar = () => {
@@ -49,6 +49,13 @@ const Navbar = () => {
               className="text-gray-300 hover:text-purple-400 transition"
             >
               Docs
+            </Link>
+            <Link
+              to="/faucet"
+              className="flex items-center space-x-1 text-gray-300 hover:text-purple-400 transition"
+            >
+              <Droplets className="h-4 w-4" />
+              <span>Faucet</span>
             </Link>
             <WalletButton />
           </div>

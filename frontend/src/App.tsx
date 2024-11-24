@@ -19,6 +19,7 @@ import Dashboard from "./pages/Dashboard";
 import Docs from "./pages/Docs";
 import Marketplace from "./pages/Marketplace";
 import MemePage from "./pages/MemePage";
+import Faucet from "./pages/Faucet";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/docs" element={<Docs />} />
           <Route path="/marketplace" element={<Marketplace />} />
           <Route path="/token/:tokenAddress" element={<MemePage />} />
+          <Route path="/faucet" element={<Faucet />} />
         </Routes>
       </main>
       <Footer />

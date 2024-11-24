@@ -415,6 +415,42 @@
       "artifacts": [
         "INativeMinter"
       ]
+    },
+    "/Users/gokuleshwarannarayanan/Documents/Repositories/Personal Repositories/Avax Hackathon/contract/contracts/Faucet.sol": {
+      "lastModificationDate": 1732435502259,
+      "contentHash": "6da339ad31046c0ba44ac4d1aa921ccb",
+      "sourceName": "contracts/Faucet.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.24"
+      ],
+      "artifacts": [
+        "Faucet"
+      ]
     }
   }
 }
