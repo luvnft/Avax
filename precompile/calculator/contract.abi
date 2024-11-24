@@ -1,0 +1,74 @@
+[
+  {
+    "type": "function",
+    "name": "add",
+    "inputs": [
+      {
+        "name": "value1",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "value2",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "result",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "nextTwo",
+    "inputs": [
+      {
+        "name": "value1",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "result1",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "result2",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "repeat",
+    "inputs": [
+      {
+        "name": "times",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "text",
+        "type": "string",
+        "internalType": "string"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "result",
+        "type": "string",
+        "internalType": "string"
+      }
+    ],
+    "stateMutability": "view"
+  }
+]
