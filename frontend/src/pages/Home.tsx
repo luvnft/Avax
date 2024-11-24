@@ -113,7 +113,7 @@ const Home = () => {
             </p>
             <div className="flex items-center justify-center mb-4">
               <img
-                src="../../ava.png"
+                src="../../public/ava.png"
                 alt="Avalanche Logo"
                 className="h-8 w-8 mr-2"
               />
