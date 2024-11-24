@@ -113,7 +113,7 @@ const Home = () => {
             </p>
             <div className="flex items-center justify-center mb-4">
               <img
-                src="../../public/ava.png"
+                src="https://cryptologos.cc/logos/avalanche-avax-logo.svg?v=035"
                 alt="Avalanche Logo"
                 className="h-8 w-8 mr-2"
               />
