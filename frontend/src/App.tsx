@@ -40,8 +40,8 @@ function App() {
           <Route path="/token/:tokenAddress" element={<MemePage />} />
           <Route path="/faucet" element={<Faucet />} />
           <Route path="/balance-app" element={<BalanceApp />} />
-          <Route path="/wallet-portfolio" element={<WalletPortfolio />} />
-          <Route path="/explorer" element={<Explorer />} />
+          <Route path="/basic-wallet" element={<WalletPortfolio />} />
+          <Route path="/basic-explorer" element={<Explorer />} />
         </Routes>
       </main>
       <Footer />

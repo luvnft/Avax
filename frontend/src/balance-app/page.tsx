@@ -21,10 +21,12 @@ export default function BalanceApp() {
 
     setError("");
     setAddress(inputValue);
+    console.log("Input value", inputValue);
     setIsLoading(true);
 
     try {
       const balances = await fetchERC20Balances(inputValue);
+      console.log("balances", balances);
       setBalances(balances);
     } catch (err) {
       setError("Failed to fetch balances");
@@ -35,11 +37,18 @@ export default function BalanceApp() {
   };
 
   const fetchERC20Balances = async (address: string) => {
+    console.log("Blockresult started");
     const blockResult = await fetch("api/balance?method=getBlockHeight");
+    console.log("blockResult", blockResult);
     const blockNumber = await blockResult.json();
+    console.log("blockNumber", blockNumber);
     const balanceResult = await fetch(
       `api/balance?method=listErc20Balances&address=${address}&blockNumber=${blockNumber}`
     );
+    console.log(
+      `api/balance?method=listErc20Balances&address=${address}&blockNumber=${blockNumber}`
+    );
+    console.log("balanceResult", balanceResult);
     const balances = await balanceResult.json();
     return balances as Erc20TokenBalance[];
   };
