@@ -8,12 +8,20 @@ import {
   Users,
   DollarSign,
 } from "lucide-react";
+import { motion } from "framer-motion";
+import { Card } from "../components/Card";
 import { useAccount, useWalletClient } from "wagmi";
 import { formatEther } from "viem";
 import { TokenFactoryABI } from "../abi";
 import { CONTRACT_ADDRESSES } from "../config/contracts";
 import { Link, useNavigate } from "react-router-dom";
 import { ethers } from "ethers";
+import BasicWallet from "../components/basic-wallet";
+import {
+  Erc1155TokenBalance,
+  Erc20TokenBalance,
+  TransactionDetails,
+} from "@avalabs/avacloud-sdk/models/components";
 
 interface MemeToken {
   name: string;
@@ -33,6 +41,8 @@ const Dashboard = () => {
   const [launchedTokens, setLaunchedTokens] = useState<MemeToken[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [recentTransactions, setRecentTransactions] =
+    useState<TransactionDetails>();
 
   useEffect(() => {
     const fetchLaunchedTokens = async () => {
@@ -230,14 +240,68 @@ const Dashboard = () => {
         </div>
 
         <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6">
-          <h2 className="text-xl font-semibold mb-6">Recent Activity</h2>
           <div className="space-y-4">
-            <div className="p-4 bg-black/20 rounded-xl">
-              <div className="text-gray-400">No recent activity</div>
-            </div>
+            <Card title="Recent Activity" className="sticky top-24">
+              <div className="space-y-4 max-h-[600px] overflow-y-auto">
+                {"nfts" === "nfts" &&
+                  recentTransactions?.erc721Transfers?.map((tx) => (
+                    <div key={tx.logIndex} className="transaction-item">
+                      <div className="flex items-center gap-4">
+                        {tx.erc721Token.metadata.imageUri && (
+                          <img
+                            src={tx.erc721Token.metadata.imageUri}
+                            alt={tx.erc721Token.name}
+                            className="w-12 h-12 rounded-lg"
+                          />
+                        )}
+                        <div>
+                          <p className="text-sm font-semibold">
+                            {String(tx.from?.address) === address
+                              ? "Sent"
+                              : "Received"}
+                          </p>
+                          <p className="text-xs text-white/60">
+                            {tx.erc721Token.name} #{tx.erc721Token.tokenId}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+
+                {"erc20" === "erc20" &&
+                  recentTransactions?.erc20Transfers?.map((tx) => (
+                    <div key={tx.logIndex} className="transaction-item">
+                      <div className="flex items-center gap-4">
+                        {tx.erc20Token.logoUri && (
+                          <img
+                            src={tx.erc20Token.logoUri}
+                            alt={tx.erc20Token.name}
+                            className="w-12 h-12 rounded-full"
+                          />
+                        )}
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold">
+                            {String(tx.from?.address) === address
+                              ? "Sent"
+                              : "Received"}
+                          </p>
+                          <p className="text-xs text-white/60">
+                            {(
+                              Number(tx.value) /
+                              10 ** Number(tx.erc20Token.decimals)
+                            ).toLocaleString()}{" "}
+                            {tx.erc20Token.symbol}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </Card>
           </div>
         </div>
       </div>
+      <BasicWallet />
     </div>
   );
 };

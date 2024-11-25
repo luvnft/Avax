@@ -22,7 +22,6 @@ import MemePage from "./pages/MemePage";
 import Faucet from "./pages/Faucet";
 import BalanceApp from "./balance-app/page";
 import Explorer from "./basic-explorer/page";
-import WalletPortfolio from "./basic-wallet/page";
 
 function App() {
   return (
@@ -40,7 +39,6 @@ function App() {
           <Route path="/token/:tokenAddress" element={<MemePage />} />
           <Route path="/faucet" element={<Faucet />} />
           <Route path="/balance-app" element={<BalanceApp />} />
-          <Route path="/basic-wallet" element={<WalletPortfolio />} />
           <Route path="/basic-explorer" element={<Explorer />} />
         </Routes>
       </main>
