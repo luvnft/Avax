@@ -96,7 +96,7 @@ export default function BalanceApp() {
         transition={{ duration: 0.5 }}
         className="text-center mb-16"
       >
-        <h1 className="text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary-300 to-secondary-300">
+        <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-500 text-transparent bg-clip-text">
           Token Balance Explorer
         </h1>
         <p className="text-xl text-white/60 mb-12 max-w-2xl mx-auto">

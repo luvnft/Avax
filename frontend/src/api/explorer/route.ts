@@ -7,7 +7,7 @@ import {
 } from "@avalabs/avacloud-sdk/models/components";
 
 const avaCloudSDK = new AvaCloudSDK({
-  apiKey: process.env.AVACLOUD_API_KEY,
+  apiKey: import.meta.env.VITE_AVACLOUD_API_KEY,
   chainId: "43114",
   network: "mainnet",
 });
@@ -50,9 +50,11 @@ const getRecentBlocks = async () => {
 };
 
 const getRecentTransactions = async () => {
-  const result = await avaCloudSDK.data.evm.transactions.listLatestTransactions({
-    pageSize: 10,
-  });
+  const result = await avaCloudSDK.data.evm.transactions.listLatestTransactions(
+    {
+      pageSize: 10,
+    }
+  );
   const transactions: NativeTransaction[] = [];
   for await (const page of result) {
     transactions.push(...page.result.transactions);

@@ -4,7 +4,7 @@ import { AvaCloudSDK } from "@avalabs/avacloud-sdk";
 import { Erc20TokenBalance } from "@avalabs/avacloud-sdk/models/components/erc20tokenbalance";
 
 const avaCloudSDK = new AvaCloudSDK({
-  apiKey: process.env.AVACLOUD_API_KEY,
+  apiKey: import.meta.env.VITE_AVACLOUD_API_KEY,
   chainId: "43114",
   network: "mainnet",
 });

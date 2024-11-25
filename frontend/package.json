@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@avalabs/avacloud-sdk": "^0.3.1",
     "@rainbow-me/rainbowkit": "^2.0.1",
     "@react-spring/three": "^9.7.3",
     "@react-three/drei": "^9.99.4",
