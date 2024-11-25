@@ -3,6 +3,15 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Erc20TokenBalance } from "@avalabs/avacloud-sdk/models/components/erc20tokenbalance";
 import { Card } from "../components/Card";
+import { AvaCloudSDK } from "@avalabs/avacloud-sdk";
+import { get } from "http";
+import { li } from "framer-motion/client";
+
+const avaCloudSDK = new AvaCloudSDK({
+  apiKey: import.meta.env.VITE_AVACLOUD_API_KEY,
+  chainId: "43114",
+  network: "mainnet",
+});
 
 export default function BalanceApp() {
   const [address, setAddress] = useState<string>("");
@@ -10,6 +19,27 @@ export default function BalanceApp() {
   const [balances, setBalances] = useState<Erc20TokenBalance[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>("");
+
+  async function getBlockHeight() {
+    console.log("getBlockHeight started");
+    const result = await avaCloudSDK.data.evm.blocks.getLatestBlocks({
+      pageSize: 1,
+    });
+    return result.result.blocks[0].blockNumber;
+  }
+
+  async function listErc20Balances(address: string, blockNumber: string) {
+    const result = await avaCloudSDK.data.evm.balances.listErc20Balances({
+      blockNumber: blockNumber,
+      pageSize: 10,
+      address: address,
+    });
+    const balances: Erc20TokenBalance[] = [];
+    for await (const page of result) {
+      balances.push(...page.result.erc20TokenBalances);
+    }
+    return balances;
+  }
 
   const handleSetAddress = async () => {
     const addressPattern = /^0x[a-fA-F0-9]{40}$/;
@@ -38,18 +68,20 @@ export default function BalanceApp() {
 
   const fetchERC20Balances = async (address: string) => {
     console.log("Blockresult started");
-    const blockResult = await fetch("api/balance?method=getBlockHeight");
-    console.log("blockResult", blockResult);
-    const blockNumber = await blockResult.json();
-    console.log("blockNumber", blockNumber);
-    const balanceResult = await fetch(
-      `api/balance?method=listErc20Balances&address=${address}&blockNumber=${blockNumber}`
-    );
-    console.log(
-      `api/balance?method=listErc20Balances&address=${address}&blockNumber=${blockNumber}`
-    );
+    const blockNumber = await getBlockHeight();
+    console.log("blockResult", blockNumber);
+    const balanceResult = await listErc20Balances(address, blockNumber);
     console.log("balanceResult", balanceResult);
-    const balances = await balanceResult.json();
+    const balances = balanceResult.map((balance) => {
+      return {
+        address: balance.address,
+        name: balance.name,
+        symbol: balance.symbol,
+        decimals: balance.decimals,
+        balance: balance.balance,
+        logoUri: balance.logoUri,
+      };
+    });
     return balances as Erc20TokenBalance[];
   };
 

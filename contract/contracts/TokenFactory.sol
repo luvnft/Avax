@@ -1,11 +1,14 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.24;
+pragma solidity 0.8.25;
 
 import "./Token.sol";
 import "./NativeLiquidityPool.sol";
 import "hardhat/console.sol";
 import "./IBondingCurvePrecompile.sol";
-contract TokenFactory {
+import "./ITeleporterMessenger.sol";
+import "./ITeleporterReceiver.sol";
+
+contract TokenFactory is ITeleporterReceiver {
     struct memeToken {
         string name;
         string symbol;
@@ -16,6 +19,52 @@ contract TokenFactory {
         address creatorAddress;
         bool isLiquidityCreated;
         uint holders;
+    }
+
+    ITeleporterMessenger public immutable messenger = ITeleporterMessenger(0x253b2784c75e510dD0fF1da844684a1aC0aa5fcf); 
+    
+    function receiveTeleporterMessage(bytes32 sourceBlockchainID, address originSenderAddress, bytes calldata message)
+        external
+    {
+        // Only the Interchain Messaging receiver can deliver a message.
+        require(msg.sender == address(messenger), "ReceiverOnSubnet: unauthorized TeleporterMessenger");
+
+        // Process the received message (e.g., liquidity created, token deployed, etc.)
+        (string memory action, address tokenAddress) = abi.decode(message, (string, address));
+
+        if (keccak256(abi.encodePacked(action)) == keccak256(abi.encodePacked("LiquidityCreated"))) {
+            // Update liquidity status across subnets
+            addressToMemeTokenMapping[tokenAddress].isLiquidityCreated = true;
+        }
+
+        // Send Roundtrip message back to sender
+        string memory response = string.concat(action, " processed on target subnet!");
+
+        messenger.sendCrossChainMessage( 
+            TeleporterMessageInput({
+                // Blockchain ID of C-Chain
+                destinationBlockchainID: sourceBlockchainID,
+                destinationAddress: originSenderAddress,
+                feeInfo: TeleporterFeeInfo({feeTokenAddress: address(0), amount: 0}),
+                requiredGasLimit: 100000,
+                allowedRelayerAddresses: new address[](0),
+                message: abi.encode(response)
+            })
+        );
+    }
+
+    function sendLiquidityCreatedMessage(address destinationAddress, address tokenAddress) internal {
+        messenger.sendCrossChainMessage( 
+            TeleporterMessageInput({
+                // Replace with blockchainID of your Avalanche L1 (see instructions in Readme)
+                destinationBlockchainID: 0x3861e061737eaeb8d00f0514d210ad1062bfacdb4bd22d1d1f5ef876ae3a8921, 
+                destinationAddress: destinationAddress, 
+                feeInfo: TeleporterFeeInfo({feeTokenAddress: address(0), amount: 0}),
+                requiredGasLimit: 100000,
+                allowedRelayerAddresses: new address[](0) ,
+                message: abi.encode("LiquidityCreated", tokenAddress)
+            })
+        );
     }
 
     address[] public memeTokenAddresses;

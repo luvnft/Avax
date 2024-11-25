@@ -6,7 +6,7 @@
       "contentHash": "386c9091ccd919ec48d6d9bb8aad7a68",
       "sourceName": "contracts/IBondingCurvePrecompile.sol",
       "solcConfig": {
-        "version": "0.8.24",
+        "version": "0.8.25",
         "settings": {
           "evmVersion": "paris",
           "optimizer": {
@@ -38,11 +38,11 @@
       ]
     },
     "/Users/gokuleshwarannarayanan/Documents/Repositories/Personal Repositories/Avax Hackathon/contract/contracts/TokenFactory.sol": {
-      "lastModificationDate": 1732427750033,
-      "contentHash": "f9b448a8a2c242c2b38c303f39cf658e",
+      "lastModificationDate": 1732478350605,
+      "contentHash": "8ba11eb00c00460c0b3e545b72f0bade",
       "sourceName": "contracts/TokenFactory.sol",
       "solcConfig": {
-        "version": "0.8.24",
+        "version": "0.8.25",
         "settings": {
           "evmVersion": "paris",
           "optimizer": {
@@ -69,10 +69,12 @@
         "./Token.sol",
         "./NativeLiquidityPool.sol",
         "hardhat/console.sol",
-        "./IBondingCurvePrecompile.sol"
+        "./IBondingCurvePrecompile.sol",
+        "./ITeleporterMessenger.sol",
+        "./ITeleporterReceiver.sol"
       ],
       "versionPragmas": [
-        "^0.8.24"
+        "0.8.25"
       ],
       "artifacts": [
         "TokenFactory"
@@ -83,7 +85,7 @@
       "contentHash": "453d670c8bc08a34f74a1ac49fdbdcdc",
       "sourceName": "contracts/Token.sol",
       "solcConfig": {
-        "version": "0.8.24",
+        "version": "0.8.25",
         "settings": {
           "evmVersion": "paris",
           "optimizer": {
@@ -121,7 +123,7 @@
       "contentHash": "12844bb878f5d45b49c3cb49dafcfa6d",
       "sourceName": "contracts/NativeLiquidityPool.sol",
       "solcConfig": {
-        "version": "0.8.24",
+        "version": "0.8.25",
         "settings": {
           "evmVersion": "paris",
           "optimizer": {
@@ -160,7 +162,7 @@
       "contentHash": "681c532e816169606d13a5fe8b475074",
       "sourceName": "hardhat/console.sol",
       "solcConfig": {
-        "version": "0.8.24",
+        "version": "0.8.25",
         "settings": {
           "evmVersion": "paris",
           "optimizer": {
@@ -196,7 +198,7 @@
       "contentHash": "38910c3dfa5e3778fac8888b1d714084",
       "sourceName": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
       "solcConfig": {
-        "version": "0.8.24",
+        "version": "0.8.25",
         "settings": {
           "evmVersion": "paris",
           "optimizer": {
@@ -237,7 +239,7 @@
       "contentHash": "67bfbc07588eb8683b3fd8f6f909563e",
       "sourceName": "@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
-        "version": "0.8.24",
+        "version": "0.8.25",
         "settings": {
           "evmVersion": "paris",
           "optimizer": {
@@ -273,7 +275,7 @@
       "contentHash": "8f19f64d2adadf448840908bbaf431c8",
       "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
       "solcConfig": {
-        "version": "0.8.24",
+        "version": "0.8.25",
         "settings": {
           "evmVersion": "paris",
           "optimizer": {
@@ -309,7 +311,7 @@
       "contentHash": "267d92fe4de67b1bdb3302c08f387dbf",
       "sourceName": "@openzeppelin/contracts/interfaces/draft-IERC6093.sol",
       "solcConfig": {
-        "version": "0.8.24",
+        "version": "0.8.25",
         "settings": {
           "evmVersion": "paris",
           "optimizer": {
@@ -347,7 +349,7 @@
       "contentHash": "794db3115001aa372c79326fcfd44b1f",
       "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
       "solcConfig": {
-        "version": "0.8.24",
+        "version": "0.8.25",
         "settings": {
           "evmVersion": "paris",
           "optimizer": {
@@ -385,7 +387,7 @@
       "contentHash": "0e6ab3dfcddc3023082d1db0899a91b5",
       "sourceName": "contracts/INativeMinter.sol",
       "solcConfig": {
-        "version": "0.8.24",
+        "version": "0.8.25",
         "settings": {
           "evmVersion": "paris",
           "optimizer": {
@@ -421,7 +423,7 @@
       "contentHash": "6da339ad31046c0ba44ac4d1aa921ccb",
       "sourceName": "contracts/Faucet.sol",
       "solcConfig": {
-        "version": "0.8.24",
+        "version": "0.8.25",
         "settings": {
           "evmVersion": "paris",
           "optimizer": {
@@ -450,6 +452,78 @@
       ],
       "artifacts": [
         "Faucet"
+      ]
+    },
+    "/Users/gokuleshwarannarayanan/Documents/Repositories/Personal Repositories/Avax Hackathon/contract/contracts/ITeleporterMessenger.sol": {
+      "lastModificationDate": 1732477324338,
+      "contentHash": "ffdda23283f2fdef1de17c4b647c1eac",
+      "sourceName": "contracts/ITeleporterMessenger.sol",
+      "solcConfig": {
+        "version": "0.8.25",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.25"
+      ],
+      "artifacts": [
+        "ITeleporterMessenger"
+      ]
+    },
+    "/Users/gokuleshwarannarayanan/Documents/Repositories/Personal Repositories/Avax Hackathon/contract/contracts/ITeleporterReceiver.sol": {
+      "lastModificationDate": 1732477096810,
+      "contentHash": "73eda3ee12f11f1f756890c86b7d7794",
+      "sourceName": "contracts/ITeleporterReceiver.sol",
+      "solcConfig": {
+        "version": "0.8.25",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.25"
+      ],
+      "artifacts": [
+        "ITeleporterReceiver"
       ]
     }
   }

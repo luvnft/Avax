@@ -10,9 +10,16 @@ import {
 } from "@avalabs/avacloud-sdk/models/components";
 import { Erc721TokenBalance } from "@avalabs/avacloud-sdk/models/components/erc721tokenbalance";
 import { Card } from "../components/Card";
+import { AvaCloudSDK } from "@avalabs/avacloud-sdk";
+const avaCloudSDK = new AvaCloudSDK({
+  apiKey: import.meta.env.VITE_AVACLOUD_API_KEY,
+  chainId: "43114", // Avalanche Mainnet
+  network: "mainnet",
+});
 
 export default function BasicWallet() {
-  const { address } = useAccount();
+  // const { address } = useAccount();
+  const address = "0xC5ec7765481F90aCBcC61DE0bb5C7904f2E63077";
   const [erc20Balances, setErc20Balances] = useState<Erc20TokenBalance[]>([]);
   const [erc721Balances, setErc721Balances] = useState<Erc721TokenBalance[]>(
     []
@@ -24,40 +31,137 @@ export default function BasicWallet() {
     useState<TransactionDetails>();
   const [activeTab, setActiveTab] = useState("nfts");
 
+  async function getBlockHeight() {
+    const result = await avaCloudSDK.data.evm.blocks.getLatestBlocks({
+      pageSize: 1,
+    });
+    return Number(result.result.blocks[0].blockNumber);
+  }
+
+  const listERC721Balances = async (address: string) => {
+    const result = await avaCloudSDK.data.evm.balances.listErc721Balances({
+      pageSize: 10,
+      address: address,
+    });
+    const balances: Erc721TokenBalance[] = [];
+    for await (const page of result) {
+      balances.push(...page.result.erc721TokenBalances);
+    }
+    return balances;
+  };
+
+  const listErc1155Balances = async (address: string) => {
+    const result = await avaCloudSDK.data.evm.balances.listErc1155Balances({
+      pageSize: 10,
+      address: address,
+    });
+    const balances: Erc1155TokenBalance[] = [];
+    for await (const page of result) {
+      balances.push(...page.result.erc1155TokenBalances);
+    }
+    return balances;
+  };
+  const listRecentTransactions = async (address: string) => {
+    const blockHeight = await getBlockHeight();
+    const result = await avaCloudSDK.data.evm.transactions.listTransactions({
+      pageSize: 10,
+      startBlock: blockHeight - 100000,
+      endBlock: blockHeight,
+      address: address,
+      sortOrder: "desc",
+    });
+    const transactions: TransactionDetails = {
+      erc20Transfers: [],
+      erc721Transfers: [],
+      erc1155Transfers: [],
+      nativeTransaction: {
+        blockNumber: "",
+        blockTimestamp: 0,
+        blockHash: "",
+        blockIndex: 0,
+        txHash: "",
+        txStatus: "",
+        txType: 0,
+        gasLimit: "",
+        gasUsed: "",
+        gasPrice: "",
+        nonce: "",
+        from: {
+          name: undefined,
+          symbol: undefined,
+          decimals: undefined,
+          logoUri: undefined,
+          address: "",
+        },
+        to: {
+          name: undefined,
+          symbol: undefined,
+          decimals: undefined,
+          logoUri: undefined,
+          address: "",
+        },
+        value: "",
+      },
+    };
+    for await (const page of result) {
+      for (const transaction of page.result.transactions) {
+        if (transaction.erc20Transfers) {
+          if (transactions.erc20Transfers) {
+            transactions.erc20Transfers.push(...transaction.erc20Transfers);
+          }
+        } else if (transaction.erc721Transfers) {
+          if (transactions.erc721Transfers) {
+            transactions.erc721Transfers.push(...transaction.erc721Transfers);
+          }
+        } else if (transaction.erc1155Transfers) {
+          if (transactions.erc1155Transfers) {
+            transactions.erc1155Transfers.push(...transaction.erc1155Transfers);
+          }
+        }
+      }
+    }
+    return transactions;
+  };
+
+  async function listErc20Balances(address: string, blockNumber: string) {
+    const result = await avaCloudSDK.data.evm.balances.listErc20Balances({
+      blockNumber: blockNumber,
+      pageSize: 10,
+      address: address,
+    });
+    const balances: Erc20TokenBalance[] = [];
+    for await (const page of result) {
+      balances.push(...page.result.erc20TokenBalances);
+    }
+    return balances;
+  }
+
   const fetchERC20Balances = async (address: string) => {
-    const blockResult = await fetch("api/balance?method=getBlockHeight");
-    const blockNumber = await blockResult.json();
-    const balanceResult = await fetch(
-      "api/balance?method=listErc20Balances&address=" +
-        address +
-        "&blockNumber=" +
-        blockNumber
+    const blockResult = await getBlockHeight();
+    const blockNumber = blockResult;
+    const balanceResult = await listErc20Balances(
+      address,
+      blockNumber.toString()
     );
-    const balances = await balanceResult.json();
+    const balances = balanceResult;
     return balances as Erc20TokenBalance[];
   };
 
   const fetchERC721Balances = async (address: string) => {
-    const result = await fetch(
-      `api/wallet?method=listERC721Balances&address=${address}`
-    );
-    const balances = await result.json();
+    const result = await listERC721Balances(address);
+    const balances = result;
     return balances as Erc721TokenBalance[];
   };
 
   const fetchERC1155Balances = async (address: string) => {
-    const result = await fetch(
-      `api/wallet?method=listERC1155Balances&address=${address}`
-    );
-    const balances = await result.json();
+    const result = await listErc1155Balances(address);
+    const balances = result;
     return balances as Erc1155TokenBalance[];
   };
 
   const fetchRecentTransactions = async (address: string) => {
-    const result = await fetch(
-      `api/wallet?method=listRecentTransactions&address=${address}`
-    );
-    const transactions = await result.json();
+    const result = await listRecentTransactions(address);
+    const transactions = result;
     return transactions as TransactionDetails;
   };
 

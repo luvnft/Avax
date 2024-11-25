@@ -7,6 +7,14 @@ import {
   EvmBlock,
 } from "@avalabs/avacloud-sdk/models/components";
 
+import { AvaCloudSDK } from "@avalabs/avacloud-sdk";
+import { get } from "http";
+const avaCloudSDK = new AvaCloudSDK({
+  apiKey: import.meta.env.VITE_AVACLOUD_API_KEY,
+  chainId: "43114",
+  network: "mainnet",
+});
+
 export default function BlockchainExplorer() {
   const [recentTransactions, setRecentTransactions] = useState<
     NativeTransaction[]
@@ -14,15 +22,40 @@ export default function BlockchainExplorer() {
   const [recentBlocks, setRecentBlocks] = useState<EvmBlock[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const getRecentBlocks = async () => {
+    const result = await avaCloudSDK.data.evm.blocks.getLatestBlocks({
+      pageSize: 10,
+    });
+    const blocks: EvmBlock[] = [];
+    for await (const page of result) {
+      blocks.push(...page.result.blocks);
+      if (blocks.length >= 10) break;
+    }
+    return blocks;
+  };
+
+  const getRecentTransactions = async () => {
+    const result =
+      await avaCloudSDK.data.evm.transactions.listLatestTransactions({
+        pageSize: 10,
+      });
+    const transactions: NativeTransaction[] = [];
+    for await (const page of result) {
+      transactions.push(...page.result.transactions);
+      if (transactions.length >= 10) break;
+    }
+    return transactions;
+  };
+
   const fetchRecentTransactions = async () => {
-    const result = await fetch("api/explorer?method=getRecentTransactions");
-    const transactions = await result.json();
+    const result = await getRecentTransactions();
+    const transactions = result;
     return transactions as NativeTransaction[];
   };
 
   const fetchRecentBlocks = async () => {
-    const result = await fetch("api/explorer?method=getRecentBlocks");
-    const blocks = await result.json();
+    const result = await getRecentBlocks();
+    const blocks = result;
     return blocks as EvmBlock[];
   };
 
