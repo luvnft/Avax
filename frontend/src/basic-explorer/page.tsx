@@ -8,7 +8,6 @@ import {
 } from "@avalabs/avacloud-sdk/models/components";
 
 import { AvaCloudSDK } from "@avalabs/avacloud-sdk";
-import { get } from "http";
 const avaCloudSDK = new AvaCloudSDK({
   apiKey: import.meta.env.VITE_AVACLOUD_API_KEY,
   chainId: "43114",
@@ -16,11 +15,21 @@ const avaCloudSDK = new AvaCloudSDK({
 });
 
 export default function BlockchainExplorer() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedItem, setSelectedItem] = useState<SelectedItem | null>(null);
   const [recentTransactions, setRecentTransactions] = useState<
     NativeTransaction[]
   >([]);
   const [recentBlocks, setRecentBlocks] = useState<EvmBlock[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  interface SelectedItem {
+    type: string;
+    id: string;
+    from: string;
+    to: string;
+    value: string;
+  }
 
   const getRecentBlocks = async () => {
     const result = await avaCloudSDK.data.evm.blocks.getLatestBlocks({
@@ -49,14 +58,24 @@ export default function BlockchainExplorer() {
 
   const fetchRecentTransactions = async () => {
     const result = await getRecentTransactions();
-    const transactions = result;
-    return transactions as NativeTransaction[];
+    return result as NativeTransaction[];
   };
 
   const fetchRecentBlocks = async () => {
     const result = await getRecentBlocks();
-    const blocks = result;
-    return blocks as EvmBlock[];
+    return result as EvmBlock[];
+  };
+
+  const handleSearch = () => {
+    if (!searchTerm.trim()) return;
+
+    setSelectedItem({
+      type: "transaction",
+      id: searchTerm,
+      from: "0xMockSender",
+      to: "0xMockReceiver",
+      value: "1.5 AVAX",
+    });
   };
 
   useEffect(() => {
@@ -89,21 +108,105 @@ export default function BlockchainExplorer() {
         transition={{ duration: 0.5 }}
         className="text-center mb-16"
       >
-        <h1 className="text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary-300 to-secondary-300">
+        <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-500 text-transparent bg-clip-text">
           Blockchain Explorer
         </h1>
-        <p className="text-xl text-white/60 mb-12 max-w-2xl mx-auto">
+        <p className="text-xl text-white/60 mb-12">
           Monitor real-time blockchain activity
         </p>
+
+        <motion.div
+          className="max-w-2xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <div className="glass-card p-8">
+            <div className="flex gap-4">
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="glass-input text-lg flex-grow"
+                placeholder="Search by transaction, block, or address"
+              />
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={handleSearch}
+                className="glass-button px-8 text-lg"
+              >
+                Search
+              </motion.button>
+            </div>
+          </div>
+        </motion.div>
       </motion.div>
 
+      {selectedItem && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          className="mb-12"
+        >
+          <Card title="Transaction Details" className="max-w-4xl mx-auto">
+            <div className="space-y-6">
+              <div className="flex items-center justify-between p-4 glass-card rounded-lg">
+                <span className="text-white/60">Transaction Hash</span>
+                <span className="font-mono text-primary-300">
+                  {selectedItem.id}
+                </span>
+              </div>
+              <div className="flex items-center justify-between p-4 glass-card rounded-lg">
+                <span className="text-white/60">From</span>
+                <span className="font-mono text-primary-300">
+                  {selectedItem.from}
+                </span>
+              </div>
+              <div className="flex items-center justify-between p-4 glass-card rounded-lg">
+                <span className="text-white/60">To</span>
+                <span className="font-mono text-primary-300">
+                  {selectedItem.to}
+                </span>
+              </div>
+              <div className="flex items-center justify-between p-4 glass-card rounded-lg">
+                <span className="text-white/60">Value</span>
+                <span className="font-mono text-primary-300">
+                  {selectedItem.value}
+                </span>
+              </div>
+            </div>
+          </Card>
+        </motion.div>
+      )}
+
       {isLoading ? (
-        <div className="flex justify-center items-center py-12">
+        <div className="flex flex-col items-center justify-center py-12">
           <motion.div
-            className="w-16 h-16 border-4 border-primary-300 border-t-transparent rounded-full"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-          />
+            className="relative w-24 h-24"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            <motion.div
+              className="absolute inset-0 rounded-full border-4 border-t-primary-300 border-r-primary-400 border-b-primary-500 border-l-primary-600"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            />
+            <motion.div
+              className="absolute inset-2 rounded-full border-4 border-t-secondary-300 border-r-secondary-400 border-b-secondary-500 border-l-secondary-600"
+              animate={{ rotate: -360 }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+            />
+          </motion.div>
+          <motion.p
+            className="mt-8 text-lg text-white/60"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            Loading blockchain data...
+          </motion.p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -120,11 +223,11 @@ export default function BlockchainExplorer() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     whileHover={{ scale: 1.02 }}
-                    className="glass-card p-4 transition-all duration-300"
+                    className="token-card group"
                   >
                     <div className="flex justify-between items-center">
                       <div className="flex flex-col">
-                        <span className="text-sm font-medium text-white/80">
+                        <span className="text-sm font-medium group-hover:text-primary-300 transition-colors">
                           {tx.txHash.substring(0, 16)}...
                         </span>
                         <span className="text-xs text-white/60">
@@ -159,11 +262,11 @@ export default function BlockchainExplorer() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     whileHover={{ scale: 1.02 }}
-                    className="glass-card p-4 transition-all duration-300"
+                    className="token-card group"
                   >
                     <div className="flex justify-between items-center">
                       <div className="flex flex-col">
-                        <span className="text-sm font-medium text-white/80">
+                        <span className="text-sm font-medium group-hover:text-primary-300 transition-colors">
                           Block #{block.blockNumber}
                         </span>
                         <span className="text-xs text-white/60">
