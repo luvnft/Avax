@@ -55,6 +55,7 @@ const Navbar = () => {
             >
               Balance
             </Link>
+
             <Link
               to="/basic-explorer"
               className="text-gray-300 hover:text-purple-400 transition"

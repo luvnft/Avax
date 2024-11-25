@@ -5,7 +5,7 @@ import "./Token.sol";
 import "./NativeLiquidityPool.sol";
 import "hardhat/console.sol";
 import "./IBondingCurvePrecompile.sol";
-import "./ITeleporterMessenger.sol";
+import "./ITeleporterMessenge.sol";
 import "./ITeleporterReceiver.sol";
 
 contract TokenFactory is ITeleporterReceiver {
@@ -56,7 +56,6 @@ contract TokenFactory is ITeleporterReceiver {
     function sendLiquidityCreatedMessage(address destinationAddress, address tokenAddress) internal {
         messenger.sendCrossChainMessage( 
             TeleporterMessageInput({
-                // Replace with blockchainID of your Avalanche L1 (see instructions in Readme)
                 destinationBlockchainID: 0x3861e061737eaeb8d00f0514d210ad1062bfacdb4bd22d1d1f5ef876ae3a8921, 
                 destinationAddress: destinationAddress, 
                 feeInfo: TeleporterFeeInfo({feeTokenAddress: address(0), amount: 0}),
@@ -124,6 +123,7 @@ contract TokenFactory is ITeleporterReceiver {
         if (listedToken.fundingRaised >= MEMECOIN_FUNDING_GOAL && !listedToken.isLiquidityCreated) {
             triggerLiquidityCreation(memeTokenAddress);
             listedToken.isLiquidityCreated = true;
+            sendLiquidityCreatedMessage(msg.sender, memeTokenAddress);
         }
         listedToken.holders += 1;
 
@@ -160,6 +160,7 @@ contract TokenFactory is ITeleporterReceiver {
         
         memeTokenCt.approve(address(nativeLiquidityPool), INIT_SUPPLY);
         nativeLiquidityPool.addLiquidity{value: avaxRaised}(memeTokenAddress, INIT_SUPPLY);
+        
     }
 
     function calculateReward(address memeTokenAddress, address user) public view returns (uint256) {
