@@ -16,6 +16,8 @@ const avaCloudSDK = new AvaCloudSDK({
 
 export default function BlockchainExplorer() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchError, setSearchError] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
   const [selectedItem, setSelectedItem] = useState<SelectedItem | null>(null);
   const [recentTransactions, setRecentTransactions] = useState<
     NativeTransaction[]
@@ -30,6 +32,24 @@ export default function BlockchainExplorer() {
     to: string;
     value: string;
   }
+
+  const validateAddress = (address: string): boolean => {
+    // Check if it's a valid hex address
+    const addressRegex = /^0x[a-fA-F0-9]{40}$/;
+    return addressRegex.test(address);
+  };
+
+  const validateTxHash = (hash: string): boolean => {
+    // Check if it's a valid transaction hash
+    const txHashRegex = /^0x[a-fA-F0-9]{64}$/;
+    return txHashRegex.test(hash);
+  };
+
+  const validateBlockNumber = (block: string): boolean => {
+    // Check if it's a valid block number
+    const blockRegex = /^\d+$/;
+    return blockRegex.test(block);
+  };
 
   const getRecentBlocks = async () => {
     const result = await avaCloudSDK.data.evm.blocks.getLatestBlocks({
@@ -66,16 +86,61 @@ export default function BlockchainExplorer() {
     return result as EvmBlock[];
   };
 
-  const handleSearch = () => {
-    if (!searchTerm.trim()) return;
+  const handleSearch = async () => {
+    if (!searchTerm.trim()) {
+      setSearchError("Please enter a search term");
+      return;
+    }
 
-    setSelectedItem({
-      type: "transaction",
-      id: searchTerm,
-      from: "0xMockSender",
-      to: "0xMockReceiver",
-      value: "1.5 AVAX",
-    });
+    setSearchError("");
+    setIsSearching(true);
+
+    try {
+      if (validateAddress(searchTerm)) {
+        // Handle address search
+        setSelectedItem({
+          type: "address",
+          id: searchTerm,
+          from: "N/A",
+          to: "N/A",
+          value: "Loading...",
+        });
+      } else if (validateTxHash(searchTerm)) {
+        // Handle transaction hash search
+        setSelectedItem({
+          type: "transaction",
+          id: searchTerm,
+          from: "0xMockSender",
+          to: "0xMockReceiver",
+          value: "1.5 AVAX",
+        });
+      } else if (validateBlockNumber(searchTerm)) {
+        // Handle block number search
+        setSelectedItem({
+          type: "block",
+          id: searchTerm,
+          from: "N/A",
+          to: "N/A",
+          value: `Block #${searchTerm}`,
+        });
+      } else {
+        setSearchError(
+          "Invalid search format. Please enter a valid address, transaction hash, or block number"
+        );
+        setSelectedItem(null);
+      }
+    } catch (error) {
+      setSearchError("An error occurred while searching. Please try again.");
+      setSelectedItem(null);
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
   };
 
   useEffect(() => {
@@ -116,28 +181,65 @@ export default function BlockchainExplorer() {
         </p>
 
         <motion.div
-          className="max-w-2xl mx-auto"
+          className="max-w-4xl mx-auto mb-12"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
           <div className="glass-card p-8">
-            <div className="flex gap-4">
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="glass-input text-lg flex-grow"
-                placeholder="Search by transaction, block, or address"
-              />
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={handleSearch}
-                className="glass-button px-8 text-lg"
-              >
-                Search
-              </motion.button>
+            <div className="flex flex-col gap-4">
+              <div className="flex gap-4">
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setSearchError("");
+                  }}
+                  onKeyPress={handleKeyPress}
+                  className="glass-input text-lg flex-grow"
+                  placeholder="Search by transaction, block, or address"
+                  disabled={isSearching}
+                />
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handleSearch}
+                  className="glass-button px-8 text-lg"
+                  disabled={isSearching}
+                >
+                  {isSearching ? (
+                    <motion.div
+                      className="w-6 h-6 border-2 border-white border-t-transparent rounded-full"
+                      animate={{ rotate: 360 }}
+                      transition={{
+                        duration: 1,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
+                    />
+                  ) : (
+                    "Search"
+                  )}
+                </motion.button>
+              </div>
+              {searchError && (
+                <motion.p
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-red-400 text-sm text-left"
+                >
+                  {searchError}
+                </motion.p>
+              )}
+              <div className="text-xs text-white/40 text-left">
+                <p>Valid formats:</p>
+                <ul className="list-disc list-inside mt-1">
+                  <li>Address: 0x... (40 characters)</li>
+                  <li>Transaction: 0x... (64 characters)</li>
+                  <li>Block: number</li>
+                </ul>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -150,28 +252,42 @@ export default function BlockchainExplorer() {
           exit={{ opacity: 0, y: -20 }}
           className="mb-12"
         >
-          <Card title="Transaction Details" className="max-w-4xl mx-auto">
+          <Card
+            title={`${
+              selectedItem.type.charAt(0).toUpperCase() +
+              selectedItem.type.slice(1)
+            } Details`}
+            className="max-w-4xl mx-auto"
+          >
             <div className="space-y-6">
               <div className="flex items-center justify-between p-4 glass-card rounded-lg">
-                <span className="text-white/60">Transaction Hash</span>
+                <span className="text-white/60">
+                  {selectedItem.type === "block" ? "Block Number" : "Hash"}
+                </span>
                 <span className="font-mono text-primary-300">
                   {selectedItem.id}
                 </span>
               </div>
+              {selectedItem.type !== "block" && (
+                <>
+                  <div className="flex items-center justify-between p-4 glass-card rounded-lg">
+                    <span className="text-white/60">From</span>
+                    <span className="font-mono text-primary-300">
+                      {selectedItem.from}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between p-4 glass-card rounded-lg">
+                    <span className="text-white/60">To</span>
+                    <span className="font-mono text-primary-300">
+                      {selectedItem.to}
+                    </span>
+                  </div>
+                </>
+              )}
               <div className="flex items-center justify-between p-4 glass-card rounded-lg">
-                <span className="text-white/60">From</span>
-                <span className="font-mono text-primary-300">
-                  {selectedItem.from}
+                <span className="text-white/60">
+                  {selectedItem.type === "block" ? "Transactions" : "Value"}
                 </span>
-              </div>
-              <div className="flex items-center justify-between p-4 glass-card rounded-lg">
-                <span className="text-white/60">To</span>
-                <span className="font-mono text-primary-300">
-                  {selectedItem.to}
-                </span>
-              </div>
-              <div className="flex items-center justify-between p-4 glass-card rounded-lg">
-                <span className="text-white/60">Value</span>
                 <span className="font-mono text-primary-300">
                   {selectedItem.value}
                 </span>

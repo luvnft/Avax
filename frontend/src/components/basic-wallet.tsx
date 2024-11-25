@@ -176,8 +176,6 @@ export default function BasicWallet() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-<<<<<<< HEAD:frontend/src/components/basic-wallet.tsx
-=======
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -190,8 +188,6 @@ export default function BasicWallet() {
           <ConnectButton />
         </div>
       </motion.div>
-
->>>>>>> 4143204 (explorer page revamped):frontend/src/basic-wallet/page.tsx
       {address ? (
         <div className="flex lg:flex-row gap-8">
           <motion.main
