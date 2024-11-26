@@ -106,7 +106,6 @@ const Launch = () => {
       if (imageFile) {
         imageUrl = await uploadToIPFS(imageFile);
       } else if (aiImageUrl) {
-        // Use the AI-generated image URL directly
         imageUrl = aiImageUrl;
       }
 
