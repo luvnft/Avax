@@ -38,7 +38,7 @@ const formatBotResponse = (text: string): string => {
 const Chatbot = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
-      text: "Hi! I'm your assistant. How can I help you today?",
+      text: "Hi! I'm your token launch assistant. How can I help you today?",
       isBot: true,
     },
   ]);
@@ -48,7 +48,7 @@ const Chatbot = () => {
   const location = useLocation();
 
   const client = new Cerebras({
-    apiKey: import.meta.env.VITE_CEREBRAS_API_KEY,
+    apiKey: "csk-pfdwvj9f6mmfe5n698txm9m5ryvpmxv3t3n66evyvrnpc2rm",
   });
 
   useEffect(() => {
@@ -90,7 +90,7 @@ const Chatbot = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-6 right-6 z-[9999]">
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
@@ -106,7 +106,9 @@ const Chatbot = () => {
           <div className="flex items-center justify-between p-4 border-b border-purple-500/20">
             <div className="flex items-center space-x-2">
               <MessageCircle className="h-5 w-5 text-purple-400" />
-              <span className="font-medium text-white">Assistant</span>
+              <span className="font-medium text-white">
+                Token Launch Assistant
+              </span>
             </div>
             <button
               onClick={() => setIsOpen(false)}
@@ -131,7 +133,7 @@ const Chatbot = () => {
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Type your message..."
+                placeholder="Ask about token creation..."
                 className="flex-1 bg-purple-900/20 border border-purple-500/20 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
                 disabled={isLoading}
               />

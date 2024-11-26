@@ -1,5 +1,6 @@
-import React from 'react';
-import { Book, Shield, Rocket, Coins } from 'lucide-react';
+import React from "react";
+import { Book, Shield, Rocket, Coins } from "lucide-react";
+import Chatbot from "../components/ChatBot";
 
 const Docs = () => {
   return (
@@ -19,8 +20,8 @@ const Docs = () => {
           </div>
           <div className="prose prose-invert max-w-none">
             <p className="text-gray-300">
-              MemeVerse is a decentralized platform for launching and trading meme tokens on MemeSubnet. 
-              Follow these steps to get started:
+              MemeVerse is a decentralized platform for launching and trading
+              meme tokens on MemeSubnet. Follow these steps to get started:
             </p>
             <ol className="list-decimal list-inside space-y-4 text-gray-300">
               <li>Connect your wallet to the MemeSubnet network</li>
@@ -74,26 +75,35 @@ const Docs = () => {
           </div>
           <div className="space-y-6">
             <div>
-              <h3 className="text-lg font-medium mb-2">How do I create a token?</h3>
+              <h3 className="text-lg font-medium mb-2">
+                How do I create a token?
+              </h3>
               <p className="text-gray-300">
-                Visit the Launch page, fill in your token details, and follow the guided process. You'll need AVAX for deployment and initial liquidity.
+                Visit the Launch page, fill in your token details, and follow
+                the guided process. You'll need AVAX for deployment and initial
+                liquidity.
               </p>
             </div>
             <div>
               <h3 className="text-lg font-medium mb-2">What are the fees?</h3>
               <p className="text-gray-300">
-                Trading fees are 0.3%, with 0.25% going to liquidity providers and 0.05% to the platform.
+                Trading fees are 0.3%, with 0.25% going to liquidity providers
+                and 0.05% to the platform.
               </p>
             </div>
             <div>
-              <h3 className="text-lg font-medium mb-2">How do I earn rewards?</h3>
+              <h3 className="text-lg font-medium mb-2">
+                How do I earn rewards?
+              </h3>
               <p className="text-gray-300">
-                Provide liquidity to earn a share of trading fees, or participate in token launches to earn launch rewards.
+                Provide liquidity to earn a share of trading fees, or
+                participate in token launches to earn launch rewards.
               </p>
             </div>
           </div>
         </section>
       </div>
+      <Chatbot />
     </div>
   );
 };

@@ -22,6 +22,7 @@ import {
   Erc20TokenBalance,
   TransactionDetails,
 } from "@avalabs/avacloud-sdk/models/components";
+import Chatbot from "../components/ChatBot";
 
 interface MemeToken {
   name: string;
@@ -302,6 +303,7 @@ const Dashboard = () => {
         </div>
       </div>
       <BasicWallet />
+      <Chatbot />
     </div>
   );
 };

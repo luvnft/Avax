@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-import { ArrowDownUp, Info } from 'lucide-react';
-import { ethers } from 'ethers';
-import { TokenFactoryABI, NativeLiquidityPoolABI } from '../abi';
-import { CONTRACT_ADDRESSES } from '../config/contracts';
+import React, { useState } from "react";
+import { ArrowDownUp, Info } from "lucide-react";
+import { ethers } from "ethers";
+import { TokenFactoryABI, NativeLiquidityPoolABI } from "../abi";
+import { CONTRACT_ADDRESSES } from "../config/contracts";
+import Chatbot from "../components/ChatBot";
 
 const Trade = () => {
   const [isSwapping, setIsSwapping] = useState(false);
-  const [swapType, setSwapType] = useState<'buy' | 'sell'>('buy');
-  const [amount, setAmount] = useState('');
-  const [selectedToken, setSelectedToken] = useState('');
+  const [swapType, setSwapType] = useState<"buy" | "sell">("buy");
+  const [amount, setAmount] = useState("");
+  const [selectedToken, setSelectedToken] = useState("");
 
   const handleSwap = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,9 +18,9 @@ const Trade = () => {
     setIsSwapping(true);
     try {
       // Contract interaction logic will go here
-      console.log('Swapping:', { amount, selectedToken, type: swapType });
+      console.log("Swapping:", { amount, selectedToken, type: swapType });
     } catch (error) {
-      console.error('Swap error:', error);
+      console.error("Swap error:", error);
     } finally {
       setIsSwapping(false);
     }
@@ -31,7 +32,9 @@ const Trade = () => {
         <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-500 text-transparent bg-clip-text">
           Trade Meme Tokens
         </h1>
-        <p className="text-gray-400">Swap tokens instantly with our native liquidity pools</p>
+        <p className="text-gray-400">
+          Swap tokens instantly with our native liquidity pools
+        </p>
       </div>
 
       <div className="bg-white/5 backdrop-blur-md rounded-2xl p-8">
@@ -47,7 +50,7 @@ const Trade = () => {
             </div>
           </div>
           <button
-            onClick={() => setSwapType(swapType === 'buy' ? 'sell' : 'buy')}
+            onClick={() => setSwapType(swapType === "buy" ? "sell" : "buy")}
             className="text-purple-400 hover:text-purple-300 transition-colors"
           >
             <ArrowDownUp className="h-5 w-5" />
@@ -57,7 +60,9 @@ const Trade = () => {
         <form onSubmit={handleSwap} className="space-y-6">
           <div className="space-y-4">
             <div className="bg-black/20 rounded-xl p-4">
-              <label className="block text-sm text-gray-400 mb-2">You {swapType === 'buy' ? 'pay' : 'sell'}</label>
+              <label className="block text-sm text-gray-400 mb-2">
+                You {swapType === "buy" ? "pay" : "sell"}
+              </label>
               <div className="flex items-center space-x-4">
                 <input
                   type="number"
@@ -67,13 +72,15 @@ const Trade = () => {
                   className="flex-1 bg-transparent text-2xl outline-none"
                 />
                 <span className="text-lg font-medium">
-                  {swapType === 'buy' ? 'AVAX' : 'TOKEN'}
+                  {swapType === "buy" ? "AVAX" : "TOKEN"}
                 </span>
               </div>
             </div>
 
             <div className="bg-black/20 rounded-xl p-4">
-              <label className="block text-sm text-gray-400 mb-2">You {swapType === 'buy' ? 'receive' : 'get'}</label>
+              <label className="block text-sm text-gray-400 mb-2">
+                You {swapType === "buy" ? "receive" : "get"}
+              </label>
               <div className="flex items-center space-x-4">
                 <select
                   value={selectedToken}
@@ -90,7 +97,7 @@ const Trade = () => {
           <div className="bg-purple-900/20 rounded-xl p-4 space-y-2">
             <div className="flex justify-between text-sm">
               <span className="text-gray-400">Price Impact</span>
-              <span className="text-purple-400">{'< 0.1%'}</span>
+              <span className="text-purple-400">{"< 0.1%"}</span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-gray-400">Liquidity Provider Fee</span>
@@ -103,7 +110,11 @@ const Trade = () => {
             disabled={isSwapping || !amount || !selectedToken}
             className="w-full bg-gradient-to-r from-purple-500 to-pink-500 py-4 rounded-xl font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isSwapping ? 'Swapping...' : `Swap ${swapType === 'buy' ? 'AVAX for Tokens' : 'Tokens for AVAX'}`}
+            {isSwapping
+              ? "Swapping..."
+              : `Swap ${
+                  swapType === "buy" ? "AVAX for Tokens" : "Tokens for AVAX"
+                }`}
           </button>
         </form>
       </div>
@@ -117,6 +128,7 @@ const Trade = () => {
           </div>
         </div>
       </div>
+      <Chatbot />
     </div>
   );
 };

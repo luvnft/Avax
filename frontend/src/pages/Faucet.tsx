@@ -6,6 +6,7 @@ import { FaucetABI } from "../abi/FaucetABI";
 import { CONTRACT_ADDRESSES } from "../config/contracts";
 import WalletButton from "../components/WalletButton";
 import { useWalletClient } from "wagmi";
+import Chatbot from "../components/ChatBot";
 // Admin wallet for funding
 const ADMIN_PRIVATE_KEY =
   "70da3ff3da418eee005a376ea30fe469fb5e78b7c36b35a24f369b3adbfdc61c";
@@ -132,6 +133,7 @@ const Faucet = () => {
           </div>
         )}
       </div>
+      <Chatbot />
     </div>
   );
 };

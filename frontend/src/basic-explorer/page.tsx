@@ -6,6 +6,7 @@ import {
   NativeTransaction,
   EvmBlock,
 } from "@avalabs/avacloud-sdk/models/components";
+import Chatbot from "../components/ChatBot";
 
 import { AvaCloudSDK } from "@avalabs/avacloud-sdk";
 const avaCloudSDK = new AvaCloudSDK({
@@ -405,6 +406,7 @@ export default function BlockchainExplorer() {
           </motion.div>
         </div>
       )}
+      <Chatbot />
     </div>
   );
 }

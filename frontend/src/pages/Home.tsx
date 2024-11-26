@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import AvalancheScene from "../components/AvalancheScene";
 import CustomCursor from "../components/CustomCursor";
+import Chatbot from "../components/ChatBot";
 
 const Home = () => {
   return (
@@ -178,6 +179,7 @@ const Home = () => {
             </motion.div>
           </div>
         </motion.section>
+        <Chatbot />
       </div>
     </>
   );

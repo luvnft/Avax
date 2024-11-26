@@ -6,6 +6,7 @@ import { Card } from "../components/Card";
 import { AvaCloudSDK } from "@avalabs/avacloud-sdk";
 import { get } from "http";
 import { li } from "framer-motion/client";
+import Chatbot from "../components/ChatBot";
 
 const avaCloudSDK = new AvaCloudSDK({
   apiKey: import.meta.env.VITE_AVACLOUD_API_KEY,
@@ -287,6 +288,7 @@ export default function BalanceApp() {
           )}
         </>
       )}
+      <Chatbot />
     </div>
   );
 }

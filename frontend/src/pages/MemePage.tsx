@@ -9,6 +9,7 @@ import { Address } from "viem";
 import BondingCurveProgress from "../components/BondingCurveProgress";
 import PriceChart from "../components/PriceChart";
 import { useAccount } from "wagmi";
+import Chatbot from "../components/ChatBot";
 interface MemeToken {
   name: string;
   symbol: string;
@@ -428,6 +429,7 @@ const MemePage = () => {
           />
         </div>
       </div>
+      <Chatbot />
     </div>
   );
 };

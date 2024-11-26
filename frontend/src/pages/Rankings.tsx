@@ -1,103 +1,3 @@
-// import React from 'react';
-// import { TrendingUp, Users, DollarSign } from 'lucide-react';
-
-// const Rankings = () => {
-//   return (
-//     <div className="max-w-6xl mx-auto">
-//       <div className="text-center mb-12">
-//         <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-500 text-transparent bg-clip-text">
-//           Token Rankings
-//         </h1>
-//         <p className="text-gray-400">Discover the top performing meme tokens on MemeVerse</p>
-//       </div>
-
-//       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-//         <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6">
-//           <div className="flex items-center space-x-3 mb-2">
-//             <TrendingUp className="h-5 w-5 text-green-400" />
-//             <h3 className="text-lg font-medium">Top Gainers</h3>
-//           </div>
-//           <div className="text-3xl font-bold text-green-400">+125.4%</div>
-//           <p className="text-sm text-gray-400">24h Best Performance</p>
-//         </div>
-
-//         <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6">
-//           <div className="flex items-center space-x-3 mb-2">
-//             <Users className="h-5 w-5 text-purple-400" />
-//             <h3 className="text-lg font-medium">Active Traders</h3>
-//           </div>
-//           <div className="text-3xl font-bold text-purple-400">10.2K</div>
-//           <p className="text-sm text-gray-400">Last 24 hours</p>
-//         </div>
-
-//         <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6">
-//           <div className="flex items-center space-x-3 mb-2">
-//             <DollarSign className="h-5 w-5 text-blue-400" />
-//             <h3 className="text-lg font-medium">Trading Volume</h3>
-//           </div>
-//           <div className="text-3xl font-bold text-blue-400">$1.2M</div>
-//           <p className="text-sm text-gray-400">24h Volume</p>
-//         </div>
-//       </div>
-
-//       <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6">
-//         <div className="flex justify-between items-center mb-6">
-//           <h2 className="text-xl font-semibold">Top Tokens</h2>
-//           <div className="flex space-x-2">
-//             <button className="px-4 py-2 rounded-lg bg-purple-500/20 text-purple-400 text-sm hover:bg-purple-500/30 transition">
-//               24h
-//             </button>
-//             <button className="px-4 py-2 rounded-lg bg-white/5 text-gray-400 text-sm hover:bg-white/10 transition">
-//               7d
-//             </button>
-//             <button className="px-4 py-2 rounded-lg bg-white/5 text-gray-400 text-sm hover:bg-white/10 transition">
-//               30d
-//             </button>
-//           </div>
-//         </div>
-
-//         <div className="overflow-x-auto">
-//           <table className="w-full">
-//             <thead>
-//               <tr className="text-left text-sm text-gray-400">
-//                 <th className="pb-4 pl-4">#</th>
-//                 <th className="pb-4">Token</th>
-//                 <th className="pb-4">Price</th>
-//                 <th className="pb-4">24h Change</th>
-//                 <th className="pb-4">Volume</th>
-//                 <th className="pb-4">Market Cap</th>
-//                 <th className="pb-4">Holders</th>
-//               </tr>
-//             </thead>
-//             <tbody>
-//               {/* Placeholder data - will be populated from contract */}
-//               <tr className="border-t border-gray-800 hover:bg-white/5 transition">
-//                 <td className="py-4 pl-4">1</td>
-//                 <td className="py-4">
-//                   <div className="flex items-center space-x-2">
-//                     <div className="w-8 h-8 bg-purple-500/20 rounded-full"></div>
-//                     <div>
-//                       <div className="font-medium">PEPE</div>
-//                       <div className="text-sm text-gray-400">PepeCoin</div>
-//                     </div>
-//                   </div>
-//                 </td>
-//                 <td className="py-4">$0.000012</td>
-//                 <td className="py-4 text-green-400">+45.2%</td>
-//                 <td className="py-4">$250K</td>
-//                 <td className="py-4">$1.2M</td>
-//                 <td className="py-4">1.2K</td>
-//               </tr>
-//             </tbody>
-//           </table>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Rankings;
-
 import React, { useEffect, useState } from "react";
 import { TrendingUp, Users, DollarSign } from "lucide-react";
 import { useWalletClient } from "wagmi";
@@ -105,6 +5,7 @@ import { ethers } from "ethers";
 import { Link } from "react-router-dom";
 import { CONTRACT_ADDRESSES } from "../config/contracts";
 import { TokenFactoryABI, TokenABI } from "../abi";
+import Chatbot from "../components/ChatBot";
 
 interface TokenData {
   name: string;
@@ -399,6 +300,7 @@ const Rankings = () => {
           </table>
         </div>
       </div>
+      <Chatbot />
     </div>
   );
 };
