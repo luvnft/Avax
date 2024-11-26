@@ -212,7 +212,9 @@ const MemePage = () => {
     );
 
     // function sellMemeToken(address memeTokenAddress, uint tokenQty)
-    const tx = await contract.sellMemeToken(token.tokenAddress, buyAmount);
+    const tx = await contract.sellMemeToken(token.tokenAddress, buyAmount, {
+      gasLimit: 1000000,
+    });
     await tx.wait();
 
     // Implement buy functionality
