@@ -180,14 +180,7 @@ export default function BasicWallet() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="text-center mb-12"
-      >
-        <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-500 text-transparent bg-clip-text">
-          Wallet Portfolio
-        </h1>
-        <div className="flex justify-center mb-8">
-          <ConnectButton />
-        </div>
-      </motion.div>
+      ></motion.div>
       {address ? (
         <div className="flex lg:flex-row gap-8">
           <motion.main
