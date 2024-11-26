@@ -6,6 +6,7 @@ import { uploadToIPFS } from "../utils/ipfs";
 import TokenForm from "../components/TokenForm";
 import ImageUpload from "../components/ImageUpload";
 import LoadingSpinner from "../components/LoadingSpinner";
+import Chatbot from "../components/ChatBot";
 import axios from "axios";
 
 const tokenInfoFields = [
@@ -251,6 +252,7 @@ const Launch = () => {
           </div>
         </div>
       </div>
+      <Chatbot />
     </div>
   );
 };
