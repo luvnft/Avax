@@ -115,13 +115,24 @@ const MemePage = () => {
           signer
         );
 
+        const tokenContract = new ethers.Contract(
+          tokenAddress,
+          TokenABI,
+          signer
+        );
+        const totalSupply = await tokenContract.totalSupply();
+        setTotalSupply(totalSupply.toString());
+        console.log("Total supply:", totalSupply.toString());
+
+        const cost = await contract.getCost(totalSupply, 1);
+
         // Mock data for demonstration
         const mockData = {
           price: "0.000033",
-          marketCap: "7.3k",
-          virtualLiquidity: "15.33k",
-          volume24h: "2,454.21",
-          tokensCreated: "51M",
+          marketCap: "7k",
+          virtualLiquidity: "13k",
+          volume24h: "245.21",
+          tokensCreated: "5",
           holders: 3,
           priceChange: 3.92,
           tokenAddress,
@@ -146,16 +157,6 @@ const MemePage = () => {
           ...mockData,
         });
 
-        const tokenContract = new ethers.Contract(
-          tokenAddress,
-          TokenABI,
-          signer
-        );
-        const totalSupply = await tokenContract.totalSupply();
-        setTotalSupply(totalSupply.toString());
-        console.log("Total supply:", totalSupply.toString());
-
-        const cost = await contract.getCost(totalSupply, 1);
         setCost(cost.toString());
         console.log("Cost:", cost.toString());
       } catch (error) {
