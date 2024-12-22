@@ -59,22 +59,22 @@ const Faucet = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-12">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-500 text-transparent bg-clip-text">
+    <div className="max-w-2xl px-4 py-12 mx-auto">
+      <div className="mb-12 text-center">
+        <h1 className="mb-4 text-4xl font-bold text-transparent bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text">
           MemeVerse Faucet
         </h1>
         <p className="text-gray-400">
-          Get test AVAX to start creating and trading meme tokens
+          Get test AVAX to start creating and trading memecoins
         </p>
       </div>
 
-      <div className="bg-white/5 backdrop-blur-md rounded-2xl p-8">
+      <div className="p-8 bg-white/5 backdrop-blur-md rounded-2xl">
         {!isConnected ? (
           <div className="text-center">
-            <Droplets className="h-12 w-12 text-purple-400 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold mb-4">Connect Your Wallet</h2>
-            <p className="text-gray-400 mb-6">
+            <Droplets className="w-12 h-12 mx-auto mb-4 text-purple-400" />
+            <h2 className="mb-4 text-xl font-semibold">Connect Your Wallet</h2>
+            <p className="mb-6 text-gray-400">
               Connect your wallet to claim test AVAX
             </p>
             <WalletButton />
@@ -83,7 +83,7 @@ const Faucet = () => {
           <div className="space-y-6">
             <div className="flex items-center justify-between p-4 bg-purple-500/10 rounded-xl">
               <div className="flex items-center space-x-3">
-                <Droplets className="h-6 w-6 text-purple-400" />
+                <Droplets className="w-6 h-6 text-purple-400" />
                 <div>
                   <h3 className="font-medium">Available Amount</h3>
                   <p className="text-sm text-gray-400">1 AVAX per claim</p>
@@ -108,13 +108,13 @@ const Faucet = () => {
                 value={receiverAddress}
                 onChange={(e) => setReceiverAddress(e.target.value)}
                 placeholder="Enter receiver address or leave empty to use your address"
-                className="w-full px-4 py-2 bg-black/20 border border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-700 bg-black/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
             </div>
 
             {error && (
-              <div className="flex items-center space-x-2 text-red-400 bg-red-400/10 p-4 rounded-xl">
-                <AlertCircle className="h-5 w-5" />
+              <div className="flex items-center p-4 space-x-2 text-red-400 bg-red-400/10 rounded-xl">
+                <AlertCircle className="w-5 h-5" />
                 <p>{error}</p>
               </div>
             )}
@@ -122,12 +122,12 @@ const Faucet = () => {
             <button
               onClick={handleClaim}
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 py-4 rounded-xl font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-4 font-medium transition-opacity bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? "Claiming..." : "Claim AVAX"}
             </button>
 
-            <p className="text-sm text-gray-400 text-center">
+            <p className="text-sm text-center text-gray-400">
               Claim 1 AVAX to get started with MemeVerse
             </p>
           </div>

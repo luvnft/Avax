@@ -167,8 +167,8 @@ const Rankings = () => {
   if (isLoading) {
     return (
       <div className="max-w-6xl mx-auto">
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
+        <div className="flex items-center justify-center h-64">
+          <div className="w-12 h-12 border-b-2 border-purple-500 rounded-full animate-spin"></div>
         </div>
       </div>
     );
@@ -176,19 +176,19 @@ const Rankings = () => {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-500 text-transparent bg-clip-text">
+      <div className="mb-12 text-center">
+        <h1 className="mb-4 text-4xl font-bold text-transparent bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text">
           Token Rankings
         </h1>
         <p className="text-gray-400">
-          Discover the top performing meme tokens on MemeVerse
+          Discover the top performing memecoins on A.MEMECO.TV.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6">
-          <div className="flex items-center space-x-3 mb-2">
-            <TrendingUp className="h-5 w-5 text-green-400" />
+      <div className="grid grid-cols-1 gap-6 mb-12 md:grid-cols-3">
+        <div className="p-6 bg-white/5 backdrop-blur-md rounded-2xl">
+          <div className="flex items-center mb-2 space-x-3">
+            <TrendingUp className="w-5 h-5 text-green-400" />
             <h3 className="text-lg font-medium">Top Gainers</h3>
           </div>
           <div className="text-3xl font-bold text-green-400">
@@ -197,9 +197,9 @@ const Rankings = () => {
           <p className="text-sm text-gray-400">24h Best Performance</p>
         </div>
 
-        <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6">
-          <div className="flex items-center space-x-3 mb-2">
-            <Users className="h-5 w-5 text-purple-400" />
+        <div className="p-6 bg-white/5 backdrop-blur-md rounded-2xl">
+          <div className="flex items-center mb-2 space-x-3">
+            <Users className="w-5 h-5 text-purple-400" />
             <h3 className="text-lg font-medium">Active Traders</h3>
           </div>
           <div className="text-3xl font-bold text-purple-400">
@@ -208,9 +208,9 @@ const Rankings = () => {
           <p className="text-sm text-gray-400">Last 24 hours</p>
         </div>
 
-        <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6">
-          <div className="flex items-center space-x-3 mb-2">
-            <DollarSign className="h-5 w-5 text-blue-400" />
+        <div className="p-6 bg-white/5 backdrop-blur-md rounded-2xl">
+          <div className="flex items-center mb-2 space-x-3">
+            <DollarSign className="w-5 h-5 text-blue-400" />
             <h3 className="text-lg font-medium">Trading Volume</h3>
           </div>
           <div className="text-3xl font-bold text-blue-400">
@@ -220,8 +220,8 @@ const Rankings = () => {
         </div>
       </div>
 
-      <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6">
-        <div className="flex justify-between items-center mb-6">
+      <div className="p-6 bg-white/5 backdrop-blur-md rounded-2xl">
+        <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-semibold">Top Tokens</h2>
           <div className="flex space-x-2">
             {(["24h", "7d", "30d"] as const).map((t) => (
@@ -243,7 +243,7 @@ const Rankings = () => {
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="text-left text-sm text-gray-400">
+              <tr className="text-sm text-left text-gray-400">
                 <th className="pb-4 pl-4">#</th>
                 <th className="pb-4">Token</th>
                 <th className="pb-4">Price</th>
@@ -257,7 +257,7 @@ const Rankings = () => {
               {tokens.map((token, index) => (
                 <tr
                   key={token.tokenAddress}
-                  className="border-t border-gray-800 hover:bg-white/5 transition cursor-pointer"
+                  className="transition border-t border-gray-800 cursor-pointer hover:bg-white/5"
                   onClick={() =>
                     (window.location.href = `/token/${token.tokenAddress}`)
                   }
@@ -272,7 +272,7 @@ const Rankings = () => {
                           className="w-8 h-8 rounded-full"
                         />
                       ) : (
-                        <div className="w-8 h-8 bg-purple-500/20 rounded-full" />
+                        <div className="w-8 h-8 rounded-full bg-purple-500/20" />
                       )}
                       <div>
                         <div className="font-medium">{token.symbol}</div>

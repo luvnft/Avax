@@ -87,61 +87,61 @@ const Marketplace = () => {
   );
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="px-4 py-8 mx-auto max-w-7xl">
       <div className="mb-12">
-        <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-500 text-transparent bg-clip-text">
+        <h1 className="mb-4 text-4xl font-bold text-transparent bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text">
           Marketplace
         </h1>
         <p className="text-gray-400">
-          Discover and trade the latest meme tokens
+          Discover and trade the latest memecoins
         </p>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-4 mb-8">
+      <div className="flex flex-col gap-4 mb-8 md:flex-row">
         <div className="relative flex-1">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+          <Search className="absolute w-5 h-5 text-gray-400 -translate-y-1/2 left-4 top-1/2" />
           <input
             type="text"
             placeholder="Search by name or symbol..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-white/5 border border-gray-700 rounded-xl pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full py-3 pl-12 pr-4 border border-gray-700 bg-white/5 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
         </div>
         <div className="flex gap-2">
-          <button className="px-6 py-3 bg-white/5 rounded-xl hover:bg-white/10 transition">
+          <button className="px-6 py-3 transition bg-white/5 rounded-xl hover:bg-white/10">
             Latest
           </button>
-          <button className="px-6 py-3 bg-white/5 rounded-xl hover:bg-white/10 transition">
+          <button className="px-6 py-3 transition bg-white/5 rounded-xl hover:bg-white/10">
             Trending
           </button>
         </div>
       </div>
 
       {isLoading ? (
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
+        <div className="flex items-center justify-center h-64">
+          <div className="w-12 h-12 border-b-2 border-purple-500 rounded-full animate-spin"></div>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filteredTokens.map((token) => (
             <div
               key={token.tokenAddress}
               onClick={() => navigate(`/token/${token.tokenAddress}`)}
-              className="bg-white/5 backdrop-blur-md rounded-2xl overflow-hidden hover:bg-white/10 transition cursor-pointer"
+              className="overflow-hidden transition cursor-pointer bg-white/5 backdrop-blur-md rounded-2xl hover:bg-white/10"
             >
-              <div className="aspect-square relative overflow-hidden">
+              <div className="relative overflow-hidden aspect-square">
                 <img
                   src={token.tokenImageUrl || "https://via.placeholder.com/400"}
                   alt={token.name}
-                  className="w-full h-full object-cover"
+                  className="object-cover w-full h-full"
                 />
-                <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md rounded-lg px-3 py-1 text-sm">
+                <div className="absolute px-3 py-1 text-sm rounded-lg top-4 right-4 bg-black/60 backdrop-blur-md">
                   <div className="flex items-center gap-1">
                     {(token.priceChange ?? 0) > 0 ? (
-                      <ArrowUpRight className="h-4 w-4 text-green-400" />
+                      <ArrowUpRight className="w-4 h-4 text-green-400" />
                     ) : (
-                      <ArrowDownRight className="h-4 w-4 text-red-400" />
+                      <ArrowDownRight className="w-4 h-4 text-red-400" />
                     )}
                     <span
                       className={
@@ -157,9 +157,9 @@ const Marketplace = () => {
               </div>
 
               <div className="p-6">
-                <div className="flex justify-between items-start mb-4">
+                <div className="flex items-start justify-between mb-4">
                   <div>
-                    <h3 className="text-lg font-semibold mb-1">{token.name}</h3>
+                    <h3 className="mb-1 text-lg font-semibold">{token.name}</h3>
                     <div className="text-sm text-gray-400">${token.symbol}</div>
                   </div>
                   <div className="text-right">
@@ -170,14 +170,14 @@ const Marketplace = () => {
                   </div>
                 </div>
 
-                <p className="text-sm text-gray-400 line-clamp-2 mb-4">
+                <p className="mb-4 text-sm text-gray-400 line-clamp-2">
                   {token.description}
                 </p>
 
                 <div className="flex items-center justify-between text-sm text-gray-400">
                   <div className="flex items-center gap-2">
-                    <Globe className="h-4 w-4" />
-                    <Twitter className="h-4 w-4" />
+                    <Globe className="w-4 h-4" />
+                    <Twitter className="w-4 h-4" />
                   </div>
                   <div>{formatEther(token.fundingRaised)} AVAX</div>
                 </div>

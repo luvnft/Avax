@@ -28,39 +28,39 @@ const Trade = () => {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-500 text-transparent bg-clip-text">
-          Trade Meme Tokens
+      <div className="mb-12 text-center">
+        <h1 className="mb-4 text-4xl font-bold text-transparent bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text">
+          Trade A Memecoin
         </h1>
         <p className="text-gray-400">
           Swap tokens instantly with our native liquidity pools
         </p>
       </div>
 
-      <div className="bg-white/5 backdrop-blur-md rounded-2xl p-8">
-        <div className="flex justify-between items-center mb-6">
+      <div className="p-8 bg-white/5 backdrop-blur-md rounded-2xl">
+        <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-2">
             <h2 className="text-xl font-semibold">Swap</h2>
-            <div className="group relative">
-              <Info className="h-4 w-4 text-gray-400 cursor-help" />
-              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 w-64">
+            <div className="relative group">
+              <Info className="w-4 h-4 text-gray-400 cursor-help" />
+              <div className="absolute invisible w-64 px-3 py-2 mb-2 text-sm text-white transition-all duration-200 -translate-x-1/2 bg-gray-900 rounded-lg opacity-0 bottom-full left-1/2 group-hover:opacity-100 group-hover:visible">
                 Trade tokens instantly using our automated liquidity pools
-                <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900" />
+                <div className="absolute -translate-x-1/2 border-4 border-transparent top-full left-1/2 border-t-gray-900" />
               </div>
             </div>
           </div>
           <button
             onClick={() => setSwapType(swapType === "buy" ? "sell" : "buy")}
-            className="text-purple-400 hover:text-purple-300 transition-colors"
+            className="text-purple-400 transition-colors hover:text-purple-300"
           >
-            <ArrowDownUp className="h-5 w-5" />
+            <ArrowDownUp className="w-5 h-5" />
           </button>
         </div>
 
         <form onSubmit={handleSwap} className="space-y-6">
           <div className="space-y-4">
-            <div className="bg-black/20 rounded-xl p-4">
-              <label className="block text-sm text-gray-400 mb-2">
+            <div className="p-4 bg-black/20 rounded-xl">
+              <label className="block mb-2 text-sm text-gray-400">
                 You {swapType === "buy" ? "pay" : "sell"}
               </label>
               <div className="flex items-center space-x-4">
@@ -69,7 +69,7 @@ const Trade = () => {
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                   placeholder="0.0"
-                  className="flex-1 bg-transparent text-2xl outline-none"
+                  className="flex-1 text-2xl bg-transparent outline-none"
                 />
                 <span className="text-lg font-medium">
                   {swapType === "buy" ? "AVAX" : "TOKEN"}
@@ -77,15 +77,15 @@ const Trade = () => {
               </div>
             </div>
 
-            <div className="bg-black/20 rounded-xl p-4">
-              <label className="block text-sm text-gray-400 mb-2">
+            <div className="p-4 bg-black/20 rounded-xl">
+              <label className="block mb-2 text-sm text-gray-400">
                 You {swapType === "buy" ? "receive" : "get"}
               </label>
               <div className="flex items-center space-x-4">
                 <select
                   value={selectedToken}
                   onChange={(e) => setSelectedToken(e.target.value)}
-                  className="flex-1 bg-transparent text-2xl outline-none"
+                  className="flex-1 text-2xl bg-transparent outline-none"
                 >
                   <option value="">Select token</option>
                   {/* Token list will be populated from contract */}
@@ -94,7 +94,7 @@ const Trade = () => {
             </div>
           </div>
 
-          <div className="bg-purple-900/20 rounded-xl p-4 space-y-2">
+          <div className="p-4 space-y-2 bg-purple-900/20 rounded-xl">
             <div className="flex justify-between text-sm">
               <span className="text-gray-400">Price Impact</span>
               <span className="text-purple-400">{"< 0.1%"}</span>
@@ -108,7 +108,7 @@ const Trade = () => {
           <button
             type="submit"
             disabled={isSwapping || !amount || !selectedToken}
-            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 py-4 rounded-xl font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-4 font-medium transition-opacity bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSwapping
               ? "Swapping..."
@@ -119,11 +119,11 @@ const Trade = () => {
         </form>
       </div>
 
-      <div className="mt-8 bg-white/5 backdrop-blur-md rounded-2xl p-6">
-        <h3 className="text-lg font-semibold mb-4">Recent Trades</h3>
+      <div className="p-6 mt-8 bg-white/5 backdrop-blur-md rounded-2xl">
+        <h3 className="mb-4 text-lg font-semibold">Recent Trades</h3>
         <div className="space-y-4">
           {/* Placeholder for recent trades */}
-          <div className="flex justify-between items-center text-sm">
+          <div className="flex items-center justify-between text-sm">
             <span className="text-gray-400">No recent trades</span>
           </div>
         </div>

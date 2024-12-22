@@ -47,7 +47,7 @@ const COMMENTS = [
   },
   {
     author: "0x3456...7890",
-    content: "This could be the next big thing in the meme token space.",
+    content: "This could be the next big thing in the memecoin space.",
     timestamp: Date.now() - 3600000 * 12, // 12 hours ago
   },
 ];
@@ -171,8 +171,8 @@ const MemePage = () => {
 
   if (isLoading || !token || !token.tokenAddress) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
+      <div className="flex items-center justify-center h-screen">
+        <div className="w-12 h-12 border-b-2 border-purple-500 rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -223,37 +223,37 @@ const MemePage = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="px-4 py-8 mx-auto max-w-7xl">
       <div className="mb-8">
         <Link
           to="/marketplace"
           className="flex items-center text-gray-400 hover:text-white"
         >
-          <ArrowLeft className="h-5 w-5 mr-2" />
+          <ArrowLeft className="w-5 h-5 mr-2" />
           Back
         </Link>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-8">
-        <div className="lg:w-3/4 space-y-6">
-          <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6">
+      <div className="flex flex-col gap-8 lg:flex-row">
+        <div className="space-y-6 lg:w-3/4">
+          <div className="p-6 bg-white/5 backdrop-blur-md rounded-2xl">
             <div className="flex items-start gap-6">
               <img
                 src={token.tokenImageUrl || "https://via.placeholder.com/150"}
                 alt={token.name}
-                className="w-32 h-32 rounded-xl object-cover"
+                className="object-cover w-32 h-32 rounded-xl"
               />
               <div className="flex-1">
                 <div className="flex items-center gap-2">
                   <h1 className="text-3xl font-bold">{token.name}</h1>
-                  <button className="p-1 hover:bg-white/10 rounded-lg">
-                    <Star className="h-5 w-5" />
+                  <button className="p-1 rounded-lg hover:bg-white/10">
+                    <Star className="w-5 h-5" />
                   </button>
                 </div>
                 <div className="flex items-center gap-4 mt-2">
                   <span className="text-gray-400">${token.symbol}</span>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs bg-white/10 px-2 py-1 rounded">
+                    <span className="px-2 py-1 text-xs rounded bg-white/10">
                       Contract
                     </span>
                     <span className="text-gray-400">
@@ -264,7 +264,7 @@ const MemePage = () => {
                         navigator.clipboard.writeText(token.tokenAddress)
                       }
                     >
-                      <Copy className="h-4 w-4 text-gray-400 hover:text-white" />
+                      <Copy className="w-4 h-4 text-gray-400 hover:text-white" />
                     </button>
                   </div>
                 </div>
@@ -273,32 +273,32 @@ const MemePage = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            <div className="bg-white/5 backdrop-blur-md rounded-xl p-4">
-              <div className="text-sm text-gray-400 mb-1">Price</div>
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-5">
+            <div className="p-4 bg-white/5 backdrop-blur-md rounded-xl">
+              <div className="mb-1 text-sm text-gray-400">Price</div>
               <div className="text-lg font-semibold">${token.price}</div>
               <div className="text-sm text-green-400">
                 +{token.priceChange}%
               </div>
             </div>
-            <div className="bg-white/5 backdrop-blur-md rounded-xl p-4">
-              <div className="text-sm text-gray-400 mb-1">Market Cap</div>
+            <div className="p-4 bg-white/5 backdrop-blur-md rounded-xl">
+              <div className="mb-1 text-sm text-gray-400">Market Cap</div>
               <div className="text-lg font-semibold">${token.marketCap}</div>
             </div>
-            <div className="bg-white/5 backdrop-blur-md rounded-xl p-4">
-              <div className="text-sm text-gray-400 mb-1">
+            <div className="p-4 bg-white/5 backdrop-blur-md rounded-xl">
+              <div className="mb-1 text-sm text-gray-400">
                 Virtual Liquidity
               </div>
               <div className="text-lg font-semibold">
                 ${token.virtualLiquidity}
               </div>
             </div>
-            <div className="bg-white/5 backdrop-blur-md rounded-xl p-4">
-              <div className="text-sm text-gray-400 mb-1">24H Volume</div>
+            <div className="p-4 bg-white/5 backdrop-blur-md rounded-xl">
+              <div className="mb-1 text-sm text-gray-400">24H Volume</div>
               <div className="text-lg font-semibold">${token.volume24h}</div>
             </div>
-            <div className="bg-white/5 backdrop-blur-md rounded-xl p-4">
-              <div className="text-sm text-gray-400 mb-1">Token Created</div>
+            <div className="p-4 bg-white/5 backdrop-blur-md rounded-xl">
+              <div className="mb-1 text-sm text-gray-400">Token Created</div>
               <div className="text-lg font-semibold">{token.tokensCreated}</div>
             </div>
           </div>
@@ -306,7 +306,7 @@ const MemePage = () => {
             currentPrice={token.price || "0.000033"}
             tokenSymbol={token.symbol}
           />
-          <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6">
+          <div className="p-6 bg-white/5 backdrop-blur-md rounded-2xl">
             <div className="flex gap-4 mb-6">
               <button
                 className={`px-4 py-2 rounded-lg ${
@@ -315,7 +315,7 @@ const MemePage = () => {
                 onClick={() => setActiveTab("comments")}
               >
                 <div className="flex items-center gap-2">
-                  <MessageSquare className="h-4 w-4" />
+                  <MessageSquare className="w-4 h-4" />
                   Comments
                 </div>
               </button>
@@ -326,7 +326,7 @@ const MemePage = () => {
                 onClick={() => setActiveTab("history")}
               >
                 <div className="flex items-center gap-2">
-                  <History className="h-4 w-4" />
+                  <History className="w-4 h-4" />
                   Trading History
                 </div>
               </button>
@@ -343,21 +343,21 @@ const MemePage = () => {
                       className="w-full bg-black/20 rounded-xl p-4 min-h-[100px] focus:outline-none focus:ring-2 focus:ring-purple-500"
                       maxLength={500}
                     />
-                    <div className="flex justify-between items-center">
+                    <div className="flex items-center justify-between">
                       <span className="text-sm text-gray-400">
                         {500 - newComment.length} characters remaining
                       </span>
                       <button
                         onClick={handlePostComment}
                         disabled={isPostingComment || !newComment.trim()}
-                        className="px-6 py-2 bg-purple-500 rounded-lg hover:bg-purple-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="px-6 py-2 transition bg-purple-500 rounded-lg hover:bg-purple-600 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {isPostingComment ? "Posting..." : "Post Comment"}
                       </button>
                     </div>
                   </>
                 ) : (
-                  <div className="text-center py-4 bg-white/5 rounded-xl">
+                  <div className="py-4 text-center bg-white/5 rounded-xl">
                     <p className="text-gray-400">
                       Please connect your wallet to post comments
                     </p>
@@ -366,8 +366,8 @@ const MemePage = () => {
                 <div className="mt-6 space-y-4">
                   {comments.length > 0 ? (
                     comments.map((comment, index) => (
-                      <div key={index} className="bg-black/20 rounded-xl p-4">
-                        <div className="flex justify-between items-center mb-2">
+                      <div key={index} className="p-4 bg-black/20 rounded-xl">
+                        <div className="flex items-center justify-between mb-2">
                           <span className="text-purple-400">
                             {formatAddress(comment.author)}
                           </span>
@@ -379,7 +379,7 @@ const MemePage = () => {
                       </div>
                     ))
                   ) : (
-                    <div className="text-center py-4">
+                    <div className="py-4 text-center">
                       <p className="text-gray-400">No comments yet</p>
                     </div>
                   )}
@@ -395,9 +395,9 @@ const MemePage = () => {
           </div>
         </div>
 
-        <div className="lg:w-1/4 space-y-6">
-          <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6">
-            <div className="flex justify-between items-center mb-6">
+        <div className="space-y-6 lg:w-1/4">
+          <div className="p-6 bg-white/5 backdrop-blur-md rounded-2xl">
+            <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold">Trade</h2>
               <div className="text-sm text-gray-400">Balance: 0 AVAX</div>
             </div>
@@ -407,17 +407,17 @@ const MemePage = () => {
                 value={buyAmount}
                 onChange={(e) => setBuyAmount(e.target.value)}
                 placeholder="Enter amount..."
-                className="w-full bg-black/20 rounded-xl p-4 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full p-4 bg-black/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
               <button
                 onClick={handleBuy}
-                className="w-full py-4 bg-purple-500 rounded-xl font-medium hover:bg-purple-600 transition"
+                className="w-full py-4 font-medium transition bg-purple-500 rounded-xl hover:bg-purple-600"
               >
                 Buy Token
               </button>
               <button
                 onClick={handleSell}
-                className="w-full py-4 bg-white/10 rounded-xl font-medium hover:bg-white/20 transition"
+                className="w-full py-4 font-medium transition bg-white/10 rounded-xl hover:bg-white/20"
               >
                 Sell Token
               </button>

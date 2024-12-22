@@ -125,27 +125,27 @@ const Launch = () => {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-500 text-transparent bg-clip-text">
+      <div className="mb-12 text-center">
+        <h1 className="mb-4 text-4xl font-bold text-transparent bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text">
           Launch Your Token
         </h1>
         <p className="text-gray-400">
-          Create your meme token in minutes with our secure launch platform
+          Create your memecoin in minutes with our secure launch platform
         </p>
       </div>
 
-      <div className="bg-white/5 backdrop-blur-md rounded-2xl p-8 mb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="p-8 mb-8 bg-white/5 backdrop-blur-md rounded-2xl">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           <div>
-            <h2 className="text-2xl font-semibold mb-6">Token Details</h2>
+            <h2 className="mb-6 text-2xl font-semibold">Token Details</h2>
             {error && (
-              <div className="mb-4 p-4 bg-red-500/10 border border-red-500/20 rounded-lg flex items-center space-x-2 text-red-400">
-                <AlertCircle className="h-5 w-5" />
+              <div className="flex items-center p-4 mb-4 space-x-2 text-red-400 border rounded-lg bg-red-500/10 border-red-500/20">
+                <AlertCircle className="w-5 h-5" />
                 <span>{error}</span>
               </div>
             )}
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-200 mb-2">
+              <label className="block mb-2 text-sm font-medium text-gray-200">
                 Token Image
               </label>
               <ImageUpload
@@ -155,8 +155,8 @@ const Launch = () => {
               />
             </div>
             <div className="mb-6 space-y-4">
-              <div className="flex items-center space-x-2 mb-2">
-                <Wand2 className="h-5 w-5 text-purple-400" />
+              <div className="flex items-center mb-2 space-x-2">
+                <Wand2 className="w-5 h-5 text-purple-400" />
                 <label className="block text-sm font-medium text-gray-200">
                   AI Image Generator
                 </label>
@@ -167,7 +167,7 @@ const Launch = () => {
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   placeholder="Describe the image you want to generate..."
-                  className="w-full p-3 pl-4 pr-32 border border-purple-500/20 rounded-lg bg-purple-900/20 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
+                  className="w-full p-3 pl-4 pr-32 text-gray-200 placeholder-gray-400 transition-all duration-200 border rounded-lg border-purple-500/20 bg-purple-900/20 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 />
                 <button
                   onClick={generateImage}
@@ -190,7 +190,7 @@ const Launch = () => {
                 </button>
               </div>
               {loadingAI && (
-                <div className="text-center py-8">
+                <div className="py-8 text-center">
                   <LoadingSpinner />
                   <p className="mt-4 text-sm text-purple-400 animate-pulse">
                     Creating your masterpiece...
@@ -204,46 +204,46 @@ const Launch = () => {
               isLoading={isLoading}
             />
           </div>
-          <div className="bg-purple-900/20 rounded-xl p-6">
-            <div className="flex items-center space-x-2 mb-4">
-              <Shield className="h-5 w-5 text-purple-400" />
+          <div className="p-6 bg-purple-900/20 rounded-xl">
+            <div className="flex items-center mb-4 space-x-2">
+              <Shield className="w-5 h-5 text-purple-400" />
               <h3 className="text-lg font-medium">Launch Information</h3>
             </div>
             <div className="space-y-4 text-sm text-gray-300">
               <div className="flex items-center space-x-2">
-                <Rocket className="h-4 w-4 text-purple-400" />
+                <Rocket className="w-4 h-4 text-purple-400" />
                 <span>Initial Supply: 200 tokens (20%)</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Rocket className="h-4 w-4 text-purple-400" />
+                <Rocket className="w-4 h-4 text-purple-400" />
                 <span>Max Supply: 1,000 tokens</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Rocket className="h-4 w-4 text-purple-400" />
+                <Rocket className="w-4 h-4 text-purple-400" />
                 <span>Launch Cost: 0.1 AVAX</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Rocket className="h-4 w-4 text-purple-400" />
+                <Rocket className="w-4 h-4 text-purple-400" />
                 <span>Automatic Liquidity Pool Creation</span>
               </div>
             </div>
-            <div className="mt-6 p-4 bg-purple-500/10 rounded-lg">
-              <h4 className="font-medium mb-2">Security Features:</h4>
+            <div className="p-4 mt-6 rounded-lg bg-purple-500/10">
+              <h4 className="mb-2 font-medium">Security Features:</h4>
               <ul className="space-y-2 text-sm text-gray-300">
                 <li className="flex items-center space-x-2">
-                  <Shield className="h-4 w-4 text-purple-400" />
+                  <Shield className="w-4 h-4 text-purple-400" />
                   <span>Anti-bot protection</span>
                 </li>
                 <li className="flex items-center space-x-2">
-                  <Shield className="h-4 w-4 text-purple-400" />
+                  <Shield className="w-4 h-4 text-purple-400" />
                   <span>Ownership renounced</span>
                 </li>
                 <li className="flex items-center space-x-2">
-                  <Shield className="h-4 w-4 text-purple-400" />
+                  <Shield className="w-4 h-4 text-purple-400" />
                   <span>Liquidity locked</span>
                 </li>
                 <li className="flex items-center space-x-2">
-                  <Shield className="h-4 w-4 text-purple-400" />
+                  <Shield className="w-4 h-4 text-purple-400" />
                   <span>Contract verified</span>
                 </li>
               </ul>
